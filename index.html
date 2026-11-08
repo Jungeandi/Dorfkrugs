@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Dorfkrugs 2026 – Stimm ab!</title>
+<meta name="description" content="Die Clip-Awards. Wähl in jeder Kategorie deinen Lieblingsclip.">
+<meta property="og:title" content="Die Dorfkrugs 2026 – Stimm ab!">
+<meta property="og:description" content="Die Clip-Awards. Wähl in jeder Kategorie deinen Lieblingsclip.">
+<meta name="theme-color" content="#2a0d0a">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,700;1,9..144,900&family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#120605; --night:#1d0907; --wine:#3d120e; --oxblood:#5c1a12;
+    --rust:#9a4220; --amber:#d9822f; --gold:#f2b64c; --cream:#f7e8d4;
+    --red:#c8161d; --muted:#c9a88f; --line:rgba(242,182,76,.22);
+    --display:"Fraunces", Georgia, serif;
+    --body:"Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    min-height:100vh; color:var(--cream); font-family:var(--body); line-height:1.5;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% -10%, #7a2a16 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 85% 110%, #4a1610 0%, transparent 60%),
+      linear-gradient(180deg, #2a0d0a 0%, var(--ink) 100%);
+    background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Filmkorn + Scanlines für den 90er-Anime-Look */
+  body::before,body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100}
+  body::before{
+    opacity:.09; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  body::after{
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0 1px, transparent 1px 3px);
+    opacity:.35;
+  }
+  button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+  a{color:var(--gold)}
+  .app{max-width:1120px;margin:0 auto;padding:24px 20px 80px;position:relative}
+  .screen{display:none;animation:fadeUp .5s cubic-bezier(.2,.7,.2,1) both}
+  .screen.active{display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .testmode{
+    position:sticky;top:0;z-index:50;margin:-24px -20px 20px;padding:8px 16px;text-align:center;
+    background:repeating-linear-gradient(45deg,#3a2a00 0 14px,#2a1e00 14px 28px);
+    color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.02em;display:none
+  }
+  .testmode.show{display:block}
+
+  /* ---------- Intro ---------- */
+  #intro{text-align:center;padding-top:4vh}
+  .logo-frame{
+    width:min(440px,82vw);margin:0 auto 34px;position:relative;border-radius:18px;
+    padding:10px;background:linear-gradient(145deg,var(--gold),var(--rust) 45%,var(--gold) 90%);
+    box-shadow:0 30px 80px -20px rgba(0,0,0,.8),0 0 0 1px rgba(0,0,0,.4),0 0 90px -10px rgba(217,130,47,.45);
+    transform:rotate(-2deg);
+  }
+  .logo-frame img{display:block;width:100%;border-radius:10px;aspect-ratio:1060/816;object-fit:cover}
+  .logo-frame::after{
+    content:"★ NOMINIERUNGEN OFFEN ★";position:absolute;right:-18px;bottom:-16px;transform:rotate(6deg);
+    background:var(--red);color:var(--cream);font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    padding:7px 12px;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,.5)
+  }
+  .kicker{font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;color:var(--amber);font-weight:700}
+  h1{
+    font-family:var(--display);font-weight:900;font-style:italic;line-height:.92;
+    font-size:clamp(3.2rem,11vw,7.6rem);letter-spacing:-.02em;margin:12px 0 8px;
+    background:linear-gradient(180deg,#fff3dc 0%,var(--gold) 55%,var(--rust) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 4px 0 rgba(0,0,0,.35));
+  }
+  h1 span{display:block;font-size:.38em;font-style:normal;font-weight:600;letter-spacing:.4em;margin-top:.25em;padding-left:.4em}
+  .lead{max-width:520px;margin:18px auto 30px;color:var(--muted);font-size:1.08rem}
+  .lead b{color:var(--cream)}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:12px;padding:18px 34px;border-radius:999px;
+    background:linear-gradient(180deg,var(--gold),var(--amber));color:var(--ink);
+    font-weight:700;font-size:1.08rem;letter-spacing:.02em;
+    box-shadow:0 10px 30px -8px rgba(242,182,76,.6),inset 0 -3px 0 rgba(0,0,0,.18);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 36px -8px rgba(242,182,76,.75),inset 0 -3px 0 rgba(0,0,0,.18)}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .fine{margin-top:18px;font-size:.85rem;color:var(--muted);opacity:.8}
+
+  /* ---------- Topbar & Fortschritt ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-style:italic;font-weight:900;font-size:1.25rem;color:var(--gold)}
+  .brand img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
+  .counter{font-size:.9rem;color:var(--muted)}
+  .counter b{color:var(--cream);font-size:1.1rem}
+  .dots{display:flex;gap:6px;margin-bottom:34px}
+  .dot{flex:1;height:6px;border-radius:3px;background:rgba(247,232,212,.12);transition:background .25s,transform .2s;position:relative}
+  .dot:hover{transform:scaleY(1.6)}
+  .dot.picked{background:var(--amber)}
+  .dot.current{background:var(--cream)}
+  .dot.current.picked{background:var(--gold);box-shadow:0 0 12px rgba(242,182,76,.7)}
+
+  /* ---------- Kategorie ---------- */
+  .cat-head{margin-bottom:28px}
+  .cat-head .tag{display:inline-block;margin-left:10px;padding:3px 9px;border-radius:4px;background:var(--red);color:var(--cream);font-size:.68rem;letter-spacing:.16em;vertical-align:middle}
+  h2{
+    font-family:var(--display);font-weight:900;font-style:italic;font-size:clamp(2.2rem,6vw,4.2rem);
+    line-height:1;margin-top:8px;color:var(--cream);text-wrap:balance
+  }
+  .hint{color:var(--muted);margin-top:10px;font-size:.95rem}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  .card{
+    position:relative;border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg,rgba(92,26,18,.55),rgba(29,9,7,.85));
+    border:1px solid var(--line);
+    transition:transform .2s, border-color .2s, box-shadow .25s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:rgba(242,182,76,.45)}
+  .card.picked{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 18px 50px -12px rgba(242,182,76,.45)}
+  .card.playing{grid-column:1/-1;transform:none}
+  .media{position:relative;aspect-ratio:16/9;background:#0b0302}
+  .card.playing .media{max-height:72vh;width:100%}
+  .media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .poster{
+    position:absolute;inset:0;width:100%;display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(242,182,76,.22), transparent 55%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 2px, transparent 2px 9px),
+      linear-gradient(160deg,#6a2414,#2a0c08 70%);
+    overflow:hidden
+  }
+  .poster .num{
+    position:absolute;left:14px;bottom:-14px;font-family:var(--display);font-weight:900;font-style:italic;
+    font-size:6.5rem;line-height:1;color:rgba(242,182,76,.16);letter-spacing:-.04em
+  }
+  .poster .playicon{
+    width:64px;height:64px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(247,232,212,.1);border:2px solid rgba(247,232,212,.55);backdrop-filter:blur(4px);
+    transition:transform .2s,background .2s
+  }
+  .poster .playicon svg{width:22px;height:22px;margin-left:4px;fill:var(--cream)}
+  .poster:hover .playicon{transform:scale(1.1);background:var(--red);border-color:var(--red)}
+  .poster .label{position:absolute;right:14px;top:12px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .nolocal{position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;padding:20px;color:var(--muted);font-size:.9rem}
+
+  .info{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px}
+  .info h3{font-family:var(--display);font-weight:700;font-style:italic;font-size:1.3rem;line-height:1.15}
+  .info h3::first-letter{text-transform:uppercase}
+  .info .ext{font-size:.75rem;color:var(--muted);text-decoration:none;opacity:.8}
+  .info .ext:hover{color:var(--gold);opacity:1}
+  .pick{
+    flex-shrink:0;padding:10px 16px;border-radius:999px;font-weight:700;font-size:.88rem;
+    border:1.5px solid rgba(247,232,212,.35);transition:all .15s;white-space:nowrap
+  }
+  .pick:hover{border-color:var(--gold);color:var(--gold)}
+  .card.picked .pick{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+  .card.picked::before{
+    content:"DEINE WAHL";position:absolute;z-index:3;top:12px;left:12px;padding:5px 10px;border-radius:4px;
+    background:var(--gold);color:var(--ink);font-size:.68rem;font-weight:700;letter-spacing:.16em;
+    animation:pop .35s cubic-bezier(.3,1.6,.5,1)
+  }
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+
+  .controls{
+    position:sticky;bottom:16px;z-index:40;display:flex;justify-content:space-between;gap:12px;margin-top:36px;
+    padding:10px;border-radius:999px;background:rgba(18,6,5,.82);backdrop-filter:blur(10px);border:1px solid var(--line)
+  }
+  .btn-ghost{padding:14px 22px;border-radius:999px;font-weight:700;color:var(--muted)}
+  .btn-ghost:hover{color:var(--cream)}
+  .btn-ghost:disabled{opacity:.3;cursor:default}
+  .controls .btn-primary{padding:14px 26px;font-size:1rem}
+
+  /* ---------- Übersicht ---------- */
+  .summary{list-style:none;margin:26px 0 30px;border-top:1px solid var(--line)}
+  .summary li{display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line)}
+  .summary .c{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:700}
+  .summary .p{font-family:var(--display);font-style:italic;font-weight:700;font-size:1.2rem}
+  .summary .p.skip{color:var(--muted);font-weight:600;opacity:.6}
+  .summary button{grid-row:1/3;grid-column:2;font-size:.85rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+  .summary button:hover{color:var(--gold)}
+  .name-field{display:block;max-width:420px;margin-bottom:26px}
+  .name-field span{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px}
+  .name-field input{
+    width:100%;padding:14px 16px;border-radius:12px;font:inherit;color:var(--cream);
+    background:rgba(0,0,0,.35);border:1px solid var(--line);outline:none
+  }
+  .name-field input:focus{border-color:var(--gold)}
+  .error{color:#ff8a7a;margin-top:14px;display:none}
+  .error.show{display:block}
+
+  /* ---------- Fertig ---------- */
+  #done{text-align:center;padding-top:10vh}
+  #done .glass{font-size:4.5rem;display:inline-block;animation:cheers 1.6s ease-in-out infinite}
+  @keyframes cheers{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg) translateY(-6px)}}
+  #done h2{font-size:clamp(3rem,10vw,6rem);background:linear-gradient(180deg,#fff3dc,var(--gold) 60%,var(--rust));-webkit-background-clip:text;background-clip:text;color:transparent}
+  #done p{color:var(--muted);max-width:460px;margin:14px auto 0;font-size:1.05rem}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:90}
+
+  footer{text-align:center;margin-top:60px;font-size:.8rem;color:var(--muted);opacity:.6}
+
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr}
+    .controls{border-radius:20px}
+    .btn-ghost{padding:12px 14px}
+    .controls .btn-primary{padding:12px 18px}
+    .logo-frame::after{right:-6px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<main class="app">
+  <div class="testmode" id="testmode">⚠ Testmodus – es ist noch keine Apps-Script-URL eingetragen, Stimmen werden nicht gespeichert.</div>
+
+  <!-- INTRO -->
+  <section id="intro" class="screen">
+    <div class="logo-frame"><img src="logo.jpg" alt="Die Dorfkrugs Logo"></div>
+    <p class="kicker"><span class="js-channel"></span> präsentiert</p>
+    <h1>Die Dorfkrugs<span class="js-year"></span></h1>
+    <p class="lead"><b><span class="js-catcount"></span> Kategorien, <span class="js-clipcount"></span> Clips.</b> Schau rein, wähl pro Kategorie deinen Favoriten und lass den Rest liegen, wenn du dich nicht entscheiden kannst.</p>
+    <button class="btn-primary" id="startBtn">Abstimmung starten <span aria-hidden="true">→</span></button>
+    <p class="fine">Ein Stimmzettel pro Browser. Die Gewinner gibt’s live im Stream.</p>
+  </section>
+
+  <!-- KATEGORIE -->
+  <section id="vote" class="screen">
+    <header class="topbar">
+      <div class="brand"><img src="logo.jpg" alt="">Die Dorfkrugs</div>
+      <div class="counter">Kategorie <b id="catNum">1</b> / <span id="catTotal"></span></div>
+    </header>
+    <nav class="dots" id="dots" aria-label="Kategorien"></nav>
+    <div class="cat-head">
+      <p class="kicker">Die Nominierten in der Kategorie</p>
+      <h2 id="catName"></h2>
+      <p class="hint">Klick auf einen Clip zum Anschauen, dann auf „Meine Stimme“.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="controls">
+      <button class="btn-ghost" id="backBtn">← Zurück</button>
+      <button class="btn-primary" id="nextBtn">Weiter →</button>
+    </div>
+  </section>
+
+  <!-- ÜBERSICHT -->
+  <section id="review" class="screen">
+    <header class="topbar">
+      <div class="brand"><img src="logo.jpg" alt="">Die Dorfkrugs</div>
+      <div class="counter">Fast geschafft</div>
+    </header>
+    <p class="kicker">Dein Stimmzettel</p>
+    <h2>Alles richtig so?</h2>
+    <ul class="summary" id="summary"></ul>
+    <label class="name-field">
+      <span>Dein Twitch-Name (optional)</span>
+      <input id="voterName" maxlength="40" placeholder="z. B. Lars" autocomplete="off">
+    </label>
+    <button class="btn-primary" id="submitBtn">Stimmzettel abgeben 🥃</button>
+    <p class="error" id="error">Das hat leider nicht geklappt. Check dein Internet und versuch es nochmal.</p>
+  </section>
+
+  <!-- FERTIG -->
+  <section id="done" class="screen">
+    <div class="glass">🥃</div>
+    <h2>Prost!</h2>
+    <p id="doneText">Deine Stimmen sind drin. Die Gewinner der Dorfkrugs werden live im Stream enthüllt.</p>
+  </section>
+
+  <footer>Die Dorfkrugs · <span class="js-channel"></span></footer>
+</main>
+
+<script>
+/* =========================================================
+   EINSTELLUNGEN – nur hier musst du etwas ändern
+   ========================================================= */
+const CONFIG = {
+  // Die Web-App-URL aus Google Apps Script (endet auf /exec).
+  // Solange das leer ist, läuft die Seite im Testmodus.
+  ENDPOINT: "",
+  YEAR: "2026",
+  CHANNEL: "einfachkrusti",
+};
+
+/* Kategorien & Clips: [Titel, Twitch-Clip-Link] */
+const CATEGORIES = [
+  { name: "Crashout 1", clips: [
+    ["wo ist der knopf", "https://clips.twitch.tv/StylishManlyHerringAllenHuhu-P_uoYXXC5n-eX27y"],
+    ["man sieht dein kopf", "https://clips.twitch.tv/MiniatureFriendlyPoultryShadyLulu-HgiP2ZEQW_4t2c78"],
+    ["schrei mich nicht an", "https://clips.twitch.tv/StylishFrozenLemurWoofer-f82ljdT5qwboeW-x"],
+    ["Arche Noah", "https://clips.twitch.tv/SincereBoredFriesRaccAttack-L3zDtNQRNJOO8RjU"],
+    ["Remote Play", "https://clips.twitch.tv/BrightGiftedHeronBatChest-VdBMHi5ekhIYXh0S"],
+  ]},
+  { name: "Crashout 2", clips: [
+    ["ist der sauer", "https://clips.twitch.tv/ConfidentDarkHamsterMoreCowbell-lwYue3yViuvfNKec"],
+    ["kurz geultet", "https://clips.twitch.tv/PrettiestTallPieGOWSkull-1VdIr2PRkZIbvv0p"],
+    ["falscher Verdächtiger", "https://clips.twitch.tv/ThirstySmoggyGiraffeUWot-k8KhfRPbSRvW4U_5"],
+    ["Lars nutzt wieder aus", "https://clips.twitch.tv/EnjoyableHomelyAntelopePeteZarollTie-WGTxgT2QuwF1u5aP"],
+    ["warum springst du einfach", "https://www.twitch.tv/einfachkrusti/clip/SpoopyNimblePancakePJSugar-7VIfLcN6zWwrv-ii"],
+  ]},
+  { name: "Beste Interaktion mit Randoms", clips: [
+    ["zur falschen Zeit am falschen Ort", "https://clips.twitch.tv/PlumpFunnyFloofArsonNoSexy-icFEMcP7sIktV9iU"],
+    ["fand er nicht so witzig", "https://clips.twitch.tv/NiceCrowdedFlamingoDatBoi-SgBRWiH45nfRg9o4"],
+    ["Mann oder Maus", "https://clips.twitch.tv/GrossCreativeReubenAllenHuhu-M_vtatZF44s-xD9u"],
+    ["sie halten sich jetzt fern", "https://clips.twitch.tv/RelatedHomelyDadCmonBruh-Y6TfRK2J1jIV5_8m"],
+    ["Hochzeit", "https://www.twitch.tv/einfachkrusti/clip/ResoluteRoughSpindleMoreCowbell-aY1ccx6JL0XFimLi"],
+  ]},
+  { name: "Lustigster Moment", clips: [
+    ["Boden ist Lava", "https://clips.twitch.tv/EmpathicTsundereMangetoutM4xHeh-i6minkNvxv9sczNh"],
+    ["Sound 1 2 3 4", "https://clips.twitch.tv/ProtectiveRoughSwordMoreCowbell-ccATZkJoI5KJn9xf"],
+    ["Fahrstuhl", "https://clips.twitch.tv/PeacefulCallousNuggetsHumbleLife-VXqNFyC4j20WaWZu"],
+    ["die Rache der Hunde", "https://www.twitch.tv/einfachkrusti/clip/PricklyLachrymoseWrenYouDontSay-zbF4bpCUUM0C_x8v"],
+    ["Peilsender", "https://clips.twitch.tv/CharmingReliablePandaSSSsss--9e_OP_8QCzvskIa"],
+  ]},
+  { name: "Bisschen verjagt", clips: [
+    ["Pizza", "https://clips.twitch.tv/HotSincereLettuceDoggo-xJtSUMzNx0fSnBCf"],
+    ["Selfmade", "https://clips.twitch.tv/AbrasiveSingleOilDxCat-7pbFUXlNQLAqvRju"],
+    ["Überraschung", "https://clips.twitch.tv/AntediluvianAdventurousAxePeteZarollTie-ieLkJ7eS48cifhoD"],
+    ["Enno", "https://clips.twitch.tv/HonestSavageFiddleheadsArsonNoSexy-6-PC4UdN6Vdgn0zc"],
+  ]},
+  { name: "WTF", clips: [
+    ["40%", "https://clips.twitch.tv/HotInexpensiveFinchWow-G0lTlLhokSVucJMg"],
+    ["so ne Meise", "https://clips.twitch.tv/AmorphousHelpfulVelociraptorPastaThat-2qDXoq3hsLn_Z507"],
+    ["bist du Alastor oder nicht?", "https://clips.twitch.tv/DignifiedMoldyMomMoreCowbell-jgHEebQ7P7xpSDgq"],
+  ]},
+  { name: "Bester Duo-Moment", clips: [
+    ["gemeinsamer Erzfeind", "https://clips.twitch.tv/SquareEsteemedKleeGOWSkull-MU2vnTwFD3LCSSrA"],
+    ["links und Schluckauf", "https://www.twitch.tv/einfachkrusti/clip/ThoughtfulThoughtfulSalamanderKeyboardCat-qcUDmw9d6HCMxxYB"],
+    ["zwei Dumme", "https://clips.twitch.tv/PrettyBetterOrcaPermaSmug-GSZmL_ReA7JfKuDf"],
+    ["tu es nicht", "https://www.twitch.tv/einfachkrusti/clip/ResourcefulResourcefulHorseImGlitch-k_v-6QEeA7K_W9Ty"],
+    ["Arena", "https://clips.twitch.tv/PiliablePleasantCarabeefDeIlluminati-Vj_Hv78s_hE2Vghr"],
+  ]},
+  { name: "Ragebait", clips: [
+    ["vorgewarnt", "https://clips.twitch.tv/MuddyViscousHeronPhilosoraptor-hL58nvU-lss7RQqa"],
+    ["pink Hautfarbe", "https://clips.twitch.tv/BoredDeterminedKleePeteZarollTie-NINi8225X_OjFZfE"],
+    ["die Waffe", "https://clips.twitch.tv/ExcitedYawningEggplantDerp-PhP1vzuUHjyFsShO"],
+    ["Brokolli", "https://clips.twitch.tv/SnappyCrunchyChickenPastaThat-Np2RHuz29mcWSA6z"],
+    ["kannst du dir in den Kopf schlagen", "https://clips.twitch.tv/HorribleDistinctRamenSoonerLater-QprNz70jGpcD-15C"],
+    ["persönliche Hölle", "https://clips.twitch.tv/ToughCalmPrariedogBabyRage-0s3cimGAIR8ddMbz"],
+  ]},
+  { name: "Dumm, dümmer, Lars", clips: [
+    ["dann bin ich wohl zu dumm", "https://clips.twitch.tv/SteamyPlacidOpossumOMGScoots-C2-PZppahtqPl7sw"],
+    ["ja fahr rein", "https://clips.twitch.tv/EnchantingOnerousCrowRiPepperonis-EZ_6D6R_WwK0u0n-"],
+    ["Umgebungsschat", "https://clips.twitch.tv/ModernNiceTitanEagleEye-B-NvpiSqhvoTrVbe"],
+    ["Onkel", "https://clips.twitch.tv/EphemeralDifficultClipsmomRalpherZ-Y76ctr45LJx1HSYZ"],
+    ["gegen nen Bot", "https://clips.twitch.tv/ComfortableLazyDugongTheTarFu-BxttWpmuN1T0nbWk"],
+    ["Bounce Pad Bounce Pad", "https://clips.twitch.tv/CalmMistyAsteriskMingLee-CmkxbOcK9OWys6RZ"],
+  ]},
+  { name: "Friendslop beschte", clips: [
+    ["Mimik", "https://clips.twitch.tv/TalentedHotDadSaltBae-x-rpGrU2Xeo_vSnx"],
+    ["Specht", "https://clips.twitch.tv/FairConfidentTruffleBudBlast-e_LNV4ry_qbxseIk"],
+    ["das wird nie alt", "https://clips.twitch.tv/BillowingTenuousKiwiWow-gaB2SMCbG3zc8sYK"],
+    ["Kichererbse", "https://clips.twitch.tv/HeartlessIncredulousWebOMGScoots-CncDqvwfjHMReeyU"],
+    ["ich hols raus", "https://clips.twitch.tv/FunGoodHyenaHotPokket-YPCnZA7-SX9rY2Sx"],
+  ]},
+  { name: "Groneberg Memes", special: true, clips: [
+    ["um die Tür hehe", "https://clips.twitch.tv/ElatedCrepuscularCourgetteEagleEye-lPUlvuHvTW7T9elp"],
+    ["grauenvoll", "https://clips.twitch.tv/EagerTolerantNigiriNotLikeThis"],
+    ["5 Punkte", "https://clips.twitch.tv/HelpfulProductiveSmoothiePoooound-8ni2azSXafZx7L7a"],
+    ["hahahha", "https://clips.twitch.tv/SuperDreamyBadgerBrainSlug-YOze1UOpPHex9TLZ"],
+    ["mähen", "https://clips.twitch.tv/FriendlyAmazonianMomLitty-3cddhGLbm9xZGkS2"],
+  ]},
+  { name: "Unkategorisiert einfach witzig", clips: [
+    ["Jaulung", "https://clips.twitch.tv/AntediluvianAlertCardMoreCowbell-7hBU-8KP4bTHZlRj"],
+    ["Desktop 2", "https://clips.twitch.tv/TastyBelovedMilkANELE--NFTXyz1_NGkpuF9"],
+    ["da sind wir doch", "https://clips.twitch.tv/IntelligentBreakableFriesKippa-WLFxNt79YO0c3iA3"],
+    ["M110", "https://clips.twitch.tv/SnappyTubularTaroAliens-88kEfbMUWZjFzyg8"],
+    ["Wildschwein", "https://clips.twitch.tv/HotHonestCheesecakePlanking-Psa5ua-Dl1p72YWV"],
+  ]},
+  { name: "OG Clips", clips: [
+    ["den Stun", "https://clips.twitch.tv/HelpfulSuccessfulCroissantFrankerZ"],
+    ["das war gewollt", "https://clips.twitch.tv/VivaciousDirtyPeafowlBabyRage"],
+    ["24 h Bruch", "https://clips.twitch.tv/ImpossibleSmilingReindeerWTRuck"],
+    ["blind", "https://clips.twitch.tv/EmpathicObservantPastaMau5"],
+    ["peinlich peinlich", "https://clips.twitch.tv/DifferentObeseElephantGOWSkull-JQt2VPv54zuuAjr8"],
+  ]},
+];
+
+/* =========================================================
+   Ab hier die Technik – muss nicht angefasst werden
+   ========================================================= */
+const KEY = "dorfkrugs-" + CONFIG.YEAR;
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem(KEY + k)); } catch { return null; } },
+  set(k,v){ try { localStorage.setItem(KEY + k, JSON.stringify(v)); } catch {} },
+};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+let picks = store.get("-draft") || {};   // { Kategoriename: Clip-Titel }
+let current = 0;
+
+function clipSlug(url){
+  try {
+    const u = new URL(url.trim());
+    if (u.hostname === "clips.twitch.tv") return u.pathname.replace(/^\/+/, "").split("/")[0];
+    const m = u.pathname.match(/\/clip\/([^/?#]+)/);
+    return m ? m[1] : null;
+  } catch { return null; }
+}
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+
+function renderDots(){
+  $("#dots").innerHTML = CATEGORIES.map((c, i) =>
+    `<button class="dot ${i === current ? "current" : ""} ${picks[c.name] ? "picked" : ""}" data-i="${i}" title="${esc(c.name)}" aria-label="${esc(c.name)}"></button>`
+  ).join("");
+}
+
+function renderCategory(){
+  const cat = CATEGORIES[current];
+  $("#catNum").textContent = current + 1;
+  $("#catName").innerHTML = esc(cat.name) + (cat.special ? '<span class="tag">SPECIAL</span>' : "");
+  $("#grid").innerHTML = cat.clips.map(([title, url], i) => `
+    <article class="card ${picks[cat.name] === title ? "picked" : ""}" data-i="${i}">
+      <div class="media">
+        <button class="poster" data-play="${i}" aria-label="${esc(title)} abspielen">
+          <span class="num">${String(i + 1).padStart(2, "0")}</span>
+          <span class="label">Clip ansehen</span>
+          <span class="playicon"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+        </button>
+      </div>
+      <div class="info">
+        <div>
+          <h3>${esc(title)}</h3>
+          <a class="ext" href="${esc(url)}" target="_blank" rel="noopener">auf Twitch öffnen ↗</a>
+        </div>
+        <button class="pick" data-pick="${i}">${picks[cat.name] === title ? "✓ Gewählt" : "Meine Stimme"}</button>
+      </div>
+    </article>`).join("");
+  $("#backBtn").disabled = false;
+  updateNext();
+  renderDots();
+}
+
+function updateNext(){
+  const cat = CATEGORIES[current];
+  const last = current === CATEGORIES.length - 1;
+  $("#nextBtn").innerHTML = last ? "Zur Übersicht →" : (picks[cat.name] ? "Weiter →" : "Überspringen →");
+}
+
+function stopAll(){
+  document.querySelectorAll(".card.playing").forEach(card => {
+    card.classList.remove("playing");
+    const i = +card.dataset.i;
+    card.querySelector(".media").innerHTML = `
+      <button class="poster" data-play="${i}" aria-label="abspielen">
+        <span class="num">${String(i + 1).padStart(2, "0")}</span>
+        <span class="label">Nochmal ansehen</span>
+        <span class="playicon"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+      </button>`;
+  });
+}
+
+function play(i){
+  stopAll();
+  const cat = CATEGORIES[current];
+  const [title, url] = cat.clips[i];
+  const card = document.querySelector(`.card[data-i="${i}"]`);
+  const media = card.querySelector(".media");
+  const slug = clipSlug(url);
+  const host = location.hostname;
+  card.classList.add("playing");
+  if (!host || !slug) {
+    media.innerHTML = `<div class="nolocal">Clips laufen erst, wenn die Seite online ist.<a href="${esc(url)}" target="_blank" rel="noopener">Hier direkt auf Twitch ansehen ↗</a></div>`;
+  } else {
+    media.innerHTML = `<iframe src="https://clips.twitch.tv/embed?clip=${encodeURIComponent(slug)}&parent=${encodeURIComponent(host)}&autoplay=true&muted=false" allow="autoplay; fullscreen" allowfullscreen title="${esc(title)}"></iframe>`;
+  }
+  requestAnimationFrame(() => card.scrollIntoView({ behavior: "smooth", block: "center" }));
+}
+
+function pick(i){
+  const cat = CATEGORIES[current];
+  const title = cat.clips[i][0];
+  if (picks[cat.name] === title) delete picks[cat.name];
+  else picks[cat.name] = title;
+  store.set("-draft", picks);
+  document.querySelectorAll(".card").forEach(card => {
+    const t = cat.clips[+card.dataset.i][0];
+    const on = picks[cat.name] === t;
+    card.classList.toggle("picked", on);
+    card.querySelector(".pick").textContent = on ? "✓ Gewählt" : "Meine Stimme";
+  });
+  updateNext();
+  renderDots();
+}
+
+function goTo(i){
+  stopAll();
+  current = i;
+  show("vote");
+  renderCategory();
+}
+
+function renderReview(){
+  $("#summary").innerHTML = CATEGORIES.map((c, i) => `
+    <li>
+      <span class="c">${esc(c.name)}</span>
+      <span class="p ${picks[c.name] ? "" : "skip"}">${picks[c.name] ? esc(picks[c.name]) : "– übersprungen –"}</span>
+      <button data-goto="${i}">${picks[c.name] ? "ändern" : "doch wählen"}</button>
+    </li>`).join("");
+  const n = Object.keys(picks).length;
+  $("#submitBtn").disabled = n === 0;
+  $("#submitBtn").textContent = n === 0 ? "Wähl mindestens einen Clip" : `${n} Stimme${n === 1 ? "" : "n"} abgeben 🥃`;
+  show("review");
+}
+
+async function submit(){
+  const btn = $("#submitBtn");
+  btn.disabled = true; btn.textContent = "Wird abgegeben …";
+  $("#error").classList.remove("show");
+  const voterId = store.get("-id") || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
+  store.set("-id", voterId);
+  const payload = {
+    voterId,
+    name: $("#voterName").value.trim().slice(0, 40),
+    votes: CATEGORIES.filter(c => picks[c.name]).map(c => ({ category: c.name, clip: picks[c.name] })),
+  };
+  try {
+    if (CONFIG.ENDPOINT) {
+      await fetch(CONFIG.ENDPOINT, {
+        method: "POST", mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+    } else {
+      console.info("[Testmodus] Würde senden:", payload);
+      await new Promise(r => setTimeout(r, 600));
+    }
+    store.set("-voted", true);
+    show("done");
+    confetti();
+  } catch (e) {
+    console.error(e);
+    $("#error").classList.add("show");
+    btn.disabled = false; btn.textContent = "Nochmal versuchen";
+  }
+}
+
+function confetti(){
+  const cv = $("#confetti"), ctx = cv.getContext("2d");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const dpr = devicePixelRatio || 1;
+  const resize = () => { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; };
+  resize(); addEventListener("resize", resize);
+  const colors = ["#f2b64c", "#d9822f", "#c8161d", "#f7e8d4", "#9a4220"];
+  const parts = Array.from({ length: 180 }, () => ({
+    x: Math.random() * cv.width, y: -Math.random() * cv.height * .6,
+    w: (6 + Math.random() * 8) * dpr, h: (8 + Math.random() * 12) * dpr,
+    vy: (2 + Math.random() * 3.5) * dpr, vx: (Math.random() - .5) * 2 * dpr,
+    r: Math.random() * 6, vr: (Math.random() - .5) * .25,
+    c: colors[(Math.random() * colors.length) | 0],
+  }));
+  const t0 = performance.now();
+  (function frame(t){
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    let alive = false;
+    for (const p of parts) {
+      p.y += p.vy; p.x += p.vx + Math.sin((t + p.r * 900) / 400) * dpr; p.r += p.vr;
+      if (p.y < cv.height + 40) alive = true;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r)));
+      ctx.restore();
+    }
+    if (alive && t - t0 < 9000) requestAnimationFrame(frame);
+    else ctx.clearRect(0, 0, cv.width, cv.height);
+  })(t0);
+}
+
+/* ---------- Start ---------- */
+document.querySelectorAll(".js-channel").forEach(el => el.textContent = CONFIG.CHANNEL);
+document.querySelectorAll(".js-year").forEach(el => el.textContent = CONFIG.YEAR);
+$(".js-catcount").textContent = CATEGORIES.length;
+$(".js-clipcount").textContent = CATEGORIES.reduce((n, c) => n + c.clips.length, 0);
+$("#catTotal").textContent = CATEGORIES.length;
+if (!CONFIG.ENDPOINT) $("#testmode").classList.add("show");
+
+$("#startBtn").onclick = () => goTo(0);
+$("#backBtn").onclick = () => current === 0 ? (stopAll(), show("intro")) : goTo(current - 1);
+$("#nextBtn").onclick = () => current === CATEGORIES.length - 1 ? (stopAll(), renderReview()) : goTo(current + 1);
+$("#submitBtn").onclick = submit;
+$("#dots").onclick = e => { const b = e.target.closest("[data-i]"); if (b) goTo(+b.dataset.i); };
+$("#grid").onclick = e => {
+  const p = e.target.closest("[data-play]"); if (p) return play(+p.dataset.play);
+  const k = e.target.closest("[data-pick]"); if (k) return pick(+k.dataset.pick);
+};
+$("#summary").onclick = e => { const b = e.target.closest("[data-goto]"); if (b) goTo(+b.dataset.goto); };
+
+if (store.get("-voted")) {
+  $("#doneText").textContent = "Du hast schon abgestimmt – danke! Die Gewinner gibt’s live im Stream.";
+  show("done");
+} else {
+  show("intro");
+}
+</script>
+</body>
+</html>
